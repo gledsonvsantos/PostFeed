@@ -13,13 +13,17 @@ import com.example.postfeed.data.remote.FirebaseService
 import com.example.postfeed.databinding.FragmentPostBinding
 import com.example.postfeed.domain.model.Post
 import com.example.postfeed.ui.listeners.PostClickListener
-import com.example.postfeed.ui.view.adapters.PostAdapter
+import com.example.postfeed.ui.adapters.PostAdapter
 import com.example.postfeed.ui.viewmodel.PostViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostFragment : Fragment(), PostClickListener {
+
+    @Inject
+    lateinit var firebaseService: FirebaseService
 
     private var _binding: FragmentPostBinding? = null
     private val binding get() = _binding!!
@@ -84,7 +88,7 @@ class PostFragment : Fragment(), PostClickListener {
 
     override fun onPostClicked(post: Post) {
         Log.d("PostFragment", "Post clicked: ${post.title}")
-        FirebaseService.logCustomEvent(firebaseAnalytics, "post_clicked", Bundle().apply {
+        firebaseService.logCustomEvent(firebaseAnalytics, "post_clicked", Bundle().apply {
             putInt("post_id", post.id)
             putString("post_title", post.title)
         })

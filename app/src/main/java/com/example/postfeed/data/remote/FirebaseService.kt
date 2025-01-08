@@ -4,8 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import javax.inject.Inject
 
-object FirebaseService {
+class FirebaseService  @Inject constructor() {
 
     fun logEvent(context: Context, eventName: String, params: Bundle) {
         FirebaseAnalytics.getInstance(context).logEvent(eventName, params)

@@ -1,4 +1,4 @@
-package com.example.postfeed.ui.view.adapters
+package com.example.postfeed.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View

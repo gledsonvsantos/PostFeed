@@ -12,7 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel @Inject constructor(private val getPostsUseCase: GetPostsUseCase) : ViewModel() {
+class PostViewModel @Inject constructor(
+    private val getPostsUseCase: GetPostsUseCase,
+    private val firebaseService: FirebaseService
+) : ViewModel() {
 
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> = _posts
@@ -25,7 +28,7 @@ class PostViewModel @Inject constructor(private val getPostsUseCase: GetPostsUse
             try {
                 _posts.value = getPostsUseCase()
             } catch (e: Exception) {
-                FirebaseService.reportCrash("Failed to fetch posts", e)
+                firebaseService.reportCrash("Failed to fetch posts", e)
                 _error.value = "Error fetching posts: ${e.message}"
             }
         }
